@@ -4,9 +4,9 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.mycompany</groupId>
+	<groupId>4984c15c-df3b-4ff3-8b8a-1e0479a40a05</groupId>
 	<artifactId>soap-consume</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<packaging>mule-application</packaging>
 
 	<name>soap-consume</name>
@@ -32,32 +32,26 @@
 				<version>${mule.maven.plugin.version}</version>
 				<extensions>true</extensions>
 				<configuration>
+					<classifier>mule-application</classifier>
 					<cloudhub2Deployment>
 						<uri>https://anypoint.mulesoft.com</uri>
 						<provider>MC</provider>
-						<environment>dev</environment>
+						<environment>Sandbox</environment>
 						<target>Cloudhub-US-East-2</target>
-						<muleVersion>4.9.0</muleVersion>
-						<username>Mule4Herbet</username>
-						<password>Mulesoft@2026!.</password>
-						<applicationName>soap-consume</applicationName>
+						<server>Repository</server>
+						<applicationName>${project.artifactId}</applicationName>
+						<releaseChannel>NONE</releaseChannel>
 						<replicas>1</replicas>
-						<vCores>1</vCores>
+						<vCores>0.1</vCores>
 						<deploymentSettings>
-							<http>
-								<inbound>
-									<publicUrl>https://soap-consume-ch2.us-e1.cloudhub.io</publicUrl>
-									<forwardSslSession>true</forwardSslSession>
-									<lastMileSecurity>true</lastMileSecurity>
-								</inbound>
-							</http>
+							<generateDefaultPublicUrl>true</generateDefaultPublicUrl>
 						</deploymentSettings>
 					</cloudhub2Deployment>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
-
+  
 
 	<dependencies>
 		<dependency>
@@ -93,6 +87,12 @@
 			<url>https://repository.mulesoft.org/releases/</url>
 			<layout>default</layout>
 		</repository>
+		<repository>
+			<id>Repository</id>
+			<name>Private Exchange repository</name>
+			<url>https://maven.mulesoft.com/api/v3/organizations/${project.groupId}</url>
+			<layout>default</layout>
+		</repository>
 	</repositories>
 
 	<pluginRepositories>
@@ -106,5 +106,14 @@
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
+	<distributionManagement>
+		<repository>
+			<id>Repository</id>
+			<name>Corporate Repository</name>
+			<url>https://maven.anypoint.mulesoft.com/api/v3/organizations/${project.groupId}</url>
+			<layout>default</layout>
+		</repository>
+	</distributionManagement>
+	
 
 </project>
